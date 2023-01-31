@@ -73,4 +73,34 @@ public class MovieServiceTest {
                 })
                 .verifyComplete();
     }
+
+    @Test
+    void test_changeAllMoviesToUpperCaseAndYearInTitle() {
+
+        Flux<Movie> moviesWithNewTitle = movieService.changeAllMoviesToUpperCaseAndYearInTitle().log();
+
+        StepVerifier.create(moviesWithNewTitle)
+                .assertNext(movie -> {
+                    assertEquals("STAR WARS - 1978", movie.getName());
+                })
+                .assertNext(movie -> {
+                    assertEquals("AVATAR - 2009", movie.getName());
+                })
+                .assertNext(movie -> {
+                    assertEquals("GROUND HOG DAY - 1993", movie.getName());
+                })
+                .assertNext(movie -> {
+                    assertEquals("DANCES WITH WOLVES - 1990", movie.getName());
+                })
+                .assertNext(movie -> {
+                    assertEquals("TEEN WOLF - 1985", movie.getName());
+                })
+                .assertNext(movie -> {
+                    assertEquals("ROCKY - 1977", movie.getName());
+                })
+                .assertNext(movie -> {
+                    assertEquals("DUMB AND DUMBER - 1994", movie.getName());
+                })
+                .verifyComplete();
+    }
 }

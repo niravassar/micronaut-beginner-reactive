@@ -29,11 +29,16 @@ public class MovieService {
     }
 
     public Flux<Movie> changeAllMoviesToUpperCaseAndYearInTitle() {
-//        Flux<Movie> movies = dataServiceApi.getAllMovies();
-//        return movies
-//                .map(movie -> movie.getGenre().equals(genre))
-//                .filter(movie -> movie.getYear() > year);
-        return null;
+        Flux<Movie> movies = dataServiceApi.getAllMovies();
+        return movies
+                .map(movie -> {
+                    movie.setName(movie.getName().toUpperCase());
+                    return movie;
+                })
+                .map(movie -> {
+                    movie.setName(movie.getName() + " - " + movie.getYear());
+                    return movie;
+                });
     }
 
     public Flux<Actor> findAllActorsOlderThanAge(Integer age) {
