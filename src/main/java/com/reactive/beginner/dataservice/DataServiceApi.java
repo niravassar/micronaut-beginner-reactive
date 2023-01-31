@@ -2,11 +2,13 @@ package com.reactive.beginner.dataservice;
 
 import com.reactive.beginner.entity.Actor;
 import com.reactive.beginner.entity.Movie;
+import jakarta.inject.Singleton;
 import reactor.core.publisher.Flux;
 
 import java.time.Duration;
 import java.util.List;
 
+@Singleton
 public class DataServiceApi {
 
     public Flux<Movie> getAllMovies() {
@@ -24,7 +26,7 @@ public class DataServiceApi {
 
     public Flux<Actor> getAllActors() {
         List<Actor> actors = List.of(
-                new Actor("Harrison For", 80),
+                new Actor("Harrison Ford", 80),
                 new Actor("Same Worthington", 46),
                 new Actor("Bill Murray", 72),
                 new Actor("Kevin Costner", 68),
