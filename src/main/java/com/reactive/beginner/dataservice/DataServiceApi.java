@@ -17,11 +17,11 @@ public class DataServiceApi {
                 new Movie("Avatar", 2009, Movie.ACTION, null),
                 new Movie("Ground Hog Day", 1993, Movie.COMEDY, null),
                 new Movie("Dances With Wolves", 1990, Movie.DRAMA, null),
-                new Movie("Teen Wolf", 1985, Movie.DRAMA, null),
-                new Movie("Rocky", 1978, Movie.DRAMA, null),
+                new Movie("Teen Wolf", 1985, Movie.COMEDY, null),
+                new Movie("Rocky", 1977, Movie.DRAMA, null),
                 new Movie("Dumb and Dumber", 1994, Movie.COMEDY, null)
         );
-        return Flux.fromIterable(movies).delayElements(Duration.ofSeconds(1L));
+        return Flux.fromIterable(movies).delayElements(Duration.ofMillis(500));
     }
 
     public Flux<Actor> getAllActors() {
@@ -34,6 +34,6 @@ public class DataServiceApi {
                 new Actor("Silvester Stallone", 76),
                 new Actor("Jim Carrey", 61)
         );
-        return Flux.fromIterable(actors).delayElements(Duration.ofSeconds(2));
+        return Flux.fromIterable(actors).delayElements(Duration.ofMillis(250));
     }
 }

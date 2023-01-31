@@ -20,4 +20,25 @@ public class MovieService {
     public Flux<Actor> getAllActors() {
         return dataServiceApi.getAllActors();
     }
+
+    public Flux<Movie> findAllMoviesWithGenreAndMadeAfterYear(String genre, long year) {
+        Flux<Movie> moviesWithAgeAndYear = dataServiceApi.getAllMovies();
+        return moviesWithAgeAndYear
+                .filter(movie -> movie.getGenre().equals(genre))
+                .filter(movie -> movie.getYear() > year);
+    }
+
+    public Flux<Movie> changeAllMoviesToUpperCaseAndYearInTitle() {
+//        Flux<Movie> movies = dataServiceApi.getAllMovies();
+//        return movies
+//                .map(movie -> movie.getGenre().equals(genre))
+//                .filter(movie -> movie.getYear() > year);
+        return null;
+    }
+
+    public Flux<Actor> findAllActorsOlderThanAge(Integer age) {
+        Flux<Actor> actorsWithAge = dataServiceApi.getAllActors();
+        return actorsWithAge
+                .filter(actor -> actor.getAge() > age);
+    }
 }
