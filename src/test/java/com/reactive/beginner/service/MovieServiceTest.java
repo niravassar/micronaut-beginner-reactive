@@ -114,6 +114,7 @@ public class MovieServiceTest {
                 .assertNext(movie -> {
                     assertEquals("Dumb and Dumber", movie.getName());
                     assertEquals("Jim Carrey", movie.getActors().get(0).getName());
+                    assertEquals(61, movie.getActors().get(0).getAge());
                 })
                 .verifyComplete();
     }

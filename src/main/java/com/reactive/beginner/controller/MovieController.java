@@ -7,6 +7,7 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import jakarta.inject.Inject;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Controller()
 public class MovieController {
@@ -32,5 +33,10 @@ public class MovieController {
     @Get("/findActorsOlder64")
     Flux<Actor> findAllActorsOlderThan64() {
         return movieService.findAllActorsOlderThanAge(64).log();
+    }
+
+    @Get("/addJimCarreyToMovieAsActor")
+    Mono<Movie> addJimCarreyToMovieAsActor() {
+        return movieService.addJimCarreyToMovieAsActor().log();
     }
 }

@@ -1,6 +1,7 @@
 package com.reactive.beginner.controller;
 
 import com.reactive.beginner.entity.Actor;
+import com.reactive.beginner.entity.Movie;
 import io.micronaut.core.type.Argument;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
@@ -30,5 +31,15 @@ public class MovieControllerTest {
         assertEquals(HttpStatus.OK, response.getStatus());
         assertEquals("Harrison Ford", actors.get(0).getName());
         assertEquals("Bill Murray", actors.get(1).getName());
+    }
+
+    @Test
+    void test_blocking_addJimCarreyToMovieAsActor() {
+        HttpRequest<?> request = HttpRequest.GET("/addJimCarreyToMovieAsActor");
+        HttpResponse<Movie> response = httpClient.toBlocking().exchange(request, Movie.class);
+        Movie movie = response.body();
+        assertEquals(HttpStatus.OK, response.getStatus());
+        assertEquals("Dumb and Dumber", movie.getName());
+        assertEquals("Jim Carrey", movie.getActors().get(0).getName());
     }
 }
