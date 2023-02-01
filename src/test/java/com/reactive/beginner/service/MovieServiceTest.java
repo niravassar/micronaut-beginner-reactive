@@ -103,4 +103,17 @@ public class MovieServiceTest {
                 })
                 .verifyComplete();
     }
+
+    @Test
+    void test_addJimCarreyToMovieAsActor() {
+
+        Flux<Movie> jimCarreyMovie = movieService.addJimCarreyToMovieAsActor().log();
+
+        StepVerifier.create(jimCarreyMovie)
+                .assertNext(movie -> {
+                    assertEquals("Dumb and Dumber", movie.getName());
+                    assertEquals("Jim Carrey", movie.getActors().get(0).getName());
+                })
+                .verifyComplete();
+    }
 }

@@ -6,6 +6,9 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import com.reactive.beginner.entity.Movie;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @Singleton
 public class MovieService {
@@ -45,5 +48,28 @@ public class MovieService {
         Flux<Actor> actorsWithAge = dataServiceApi.getAllActors();
         return actorsWithAge
                 .filter(actor -> actor.getAge() > age);
+    }
+
+    public Flux<Movie> addJimCarreyToMovieAsActor() {
+        Flux<Movie> movies = dataServiceApi.getAllMovies();
+        Flux<Actor> actors = dataServiceApi.getAllActors();
+        Flux<Movie> editedMovie =
+          actors
+             .filter(actor -> actor.getName().equals("Jim Carrey"))
+             // need a flatmap other map give Flux of Flux
+             .flatMap( jimCarreyActor -> {
+                    Flux<Movie> myMovie = movies
+                          .filter(movie -> movie.getName().equals("Dumb and Dumber"))
+                          .map(dumbAndDumberMovie -> {
+                              List<Actor> actorsForfDumbAndDumber = List.of(jimCarreyActor);
+                              dumbAndDumberMovie.setActors(actorsForfDumbAndDumber);
+                              // return the movie edited back to the steam
+                              return dumbAndDumberMovie;
+                          });
+                    // return the stream with edited movie
+                    return myMovie;
+                });
+        // return the stream back to method signature
+        return editedMovie;
     }
 }
