@@ -75,9 +75,9 @@ public class MovieServiceTest {
     }
 
     @Test
-    void test_changeAllMoviesToUpperCaseAndYearInTitle() {
+    void test_getAllMoviesWithUpperCaseAndYearInTitle() {
 
-        Flux<Movie> moviesWithNewTitle = movieService.changeAllMoviesToUpperCaseAndYearInTitle().log();
+        Flux<Movie> moviesWithNewTitle = movieService.getAllMoviesWithUpperCaseAndYearInTitle().log();
 
         StepVerifier.create(moviesWithNewTitle)
                 .assertNext(movie -> {

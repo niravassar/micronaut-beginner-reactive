@@ -28,7 +28,7 @@ public class MovieService {
                 .filter(movie -> movie.getYear() > year);
     }
 
-    public Flux<Movie> changeAllMoviesToUpperCaseAndYearInTitle() {
+    public Flux<Movie> getAllMoviesWithUpperCaseAndYearInTitle() {
         Flux<Movie> movies = dataServiceApi.getAllMovies();
         return movies
                 .map(movie -> {

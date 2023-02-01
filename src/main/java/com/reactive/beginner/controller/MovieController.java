@@ -19,17 +19,17 @@ public class MovieController {
         return "Hello";
     }
 
-    @Get("/findDramaAfter78")
+    @Get("/findDramasAfter78")
     Flux<Movie> findDramaAfter78() {
         return movieService.findAllMoviesWithGenreAndMadeAfterYear(Movie.DRAMA, 1978);
     }
 
-    @Get("/returnMoviesAndYear")
-    Flux<Movie> changeAllMoviesToUpperCaseAndYearInTitle() {
-        return movieService.changeAllMoviesToUpperCaseAndYearInTitle();
+    @Get("/getMoviesAndYearInTitle")
+    Flux<Movie> getAllMoviesToUpperCaseAndYearInTitle() {
+        return movieService.getAllMoviesWithUpperCaseAndYearInTitle();
     }
 
-    @Get("/actorsOlder64")
+    @Get("/findActorsOlder64")
     Flux<Actor> findAllActorsOlderThan64() {
         return movieService.findAllActorsOlderThanAge(64).log();
     }
