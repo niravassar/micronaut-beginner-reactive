@@ -6,6 +6,7 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -107,7 +108,7 @@ public class MovieServiceTest {
     @Test
     void test_addJimCarreyToMovieAsActor() {
 
-        Flux<Movie> jimCarreyMovie = movieService.addJimCarreyToMovieAsActor().log();
+        Mono<Movie> jimCarreyMovie = movieService.addJimCarreyToMovieAsActor().log();
 
         StepVerifier.create(jimCarreyMovie)
                 .assertNext(movie -> {
