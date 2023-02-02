@@ -8,9 +8,11 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
+import io.micronaut.reactor.http.client.ReactorStreamingHttpClient;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 
@@ -23,7 +25,11 @@ public class MovieControllerTest {
     @Client("/")
     private HttpClient httpClient;
 
-    @Test
+     @Inject
+     @Client("/")
+     private ReactorStreamingHttpClient reactorStreamingHttpClient;
+
+     @Test
     void test_blocking_findActorsOlder64() {
         HttpRequest<?> request = HttpRequest.GET("/findActorsOlder64");
         HttpResponse<List<Actor>> response = httpClient.toBlocking().exchange(request, Argument.listOf(Actor.class));
@@ -41,5 +47,18 @@ public class MovieControllerTest {
         assertEquals(HttpStatus.OK, response.getStatus());
         assertEquals("Dumb and Dumber", movie.getName());
         assertEquals("Jim Carrey", movie.getActors().get(0).getName());
+    }
+
+    @Test
+    void test_reactive_addJimCarreyToMovieAsActor() {
+        HttpRequest<?> request = HttpRequest.GET("/addJimCarreyToMovieAsActor");
+        Flux<HttpResponse<Movie>> responseStream = reactorStreamingHttpClient.exchange(request, Movie.class);
+
+        responseStream.subscribe( response -> {
+            Movie movie = response.body();
+            assertEquals(HttpStatus.OK, response.getStatus());
+            assertEquals("Dumb and Dumber", movie.getName());
+            assertEquals("Jim Carrey", movie.getActors().get(0).getName());
+        });
     }
 }
