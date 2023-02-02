@@ -118,4 +118,14 @@ public class MovieServiceTest {
                 })
                 .verifyComplete();
     }
+
+    @Test
+    void test_addJimCarreyToMovieAsActorWithBlocks() {
+
+        Movie jimCarreyMovie = movieService.addJimCarreyToMovieAsActor_withBlocks();
+
+        assertEquals("Dumb and Dumber", jimCarreyMovie.getName());
+        assertEquals("Jim Carrey", jimCarreyMovie.getActors().get(0).getName());
+        assertEquals(61, jimCarreyMovie.getActors().get(0).getAge());
+    }
 }

@@ -72,4 +72,14 @@ public class MovieService {
         // return the stream back to method signature
         return Mono.from(editedMovie);
     }
+
+    public Movie addJimCarreyToMovieAsActor_withBlocks() {
+        Flux<Movie> movies = dataServiceApi.getAllMovies().log();
+        Flux<Actor> actors = dataServiceApi.getAllActors().log();
+        // adding blockFirst at the end cuts off the reactive nature and becomes blocking
+        Actor jimCarrey = actors.filter(actor -> actor.getName().equals("Jim Carrey")).log().blockFirst();
+        Movie dumbAndDumber = movies.filter(movie -> movie.getName().equals("Dumb and Dumber")).log().blockFirst();
+        dumbAndDumber.setActors(List.of(jimCarrey));
+        return dumbAndDumber;
+    }
 }
